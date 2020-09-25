@@ -1,42 +1,34 @@
-from settrade.openapi import Investor
+import settrade.openapi
 import time
 import json
+from datetime import datetime
 
-app_id_test = "tVWsMHC3WGvoL8wq"
-app_secret_test = "AL4LYw69AZB+wiSnqHe+hiuyCRf943QUyaZmjRRlH+hs"
-account_test = "FT0015D"
-is_auto_queue_test = False
+app_id_test = "DUN9VgTfoUZEXocR"
+app_secret_test = "ALSv8m13iHZKxEdJtbh+p9lAmMbX34Waf6U/6lJxstvG"
+account_test = "ausiris5"
 app_code_test = "ALGO"
-broker_id_test = "041"
+broker_id_test = "063"
 pin_test = "111111"
 
-##### Place Order
-symbol="GOH21"
-price=1620
-volume=1
-side="LONG"
-position="OPEN"
 
-account_test_fail = "UNKNOWN_ACC"
+investor = settrade.openapi.Investor(
+    app_id=app_id_test, 
+    app_secret=app_secret_test, 
+    broker_id=broker_id_test, 
+    app_code=app_code_test)
 
-# Login
-print("## Login")
-investor = Investor(    
-		app_id=app_id_test,    
-		app_secret=app_secret_test,
-        app_code=app_code_test,
-        broker_id=broker_id_test,
-        is_auto_queue=is_auto_queue_test)
-
-# Set Derivative Account
-print("## Set Derivative Account")
-deri = investor.Derivatives(account_test)
-
-print("## Set Derivative Account")
-deri_fail = investor.Derivatives(account_test_fail)
-
-# Set MQTT
+deriAcc = investor.Derivatives(account_no="ausiris5")
 mqtt = investor.MQTTWebsocket()
 
+def main(result, subscriber):
+    tm = datetime.now()
+    date_time = tm.strftime('%Y-%m-%d %H:%M:%S')
+    bid = result['bid_price1']
+    ask = result['ask_price1']
+    
 
-print(deri.get_account_info())
+    print(f'bid:{bid} ask:{ask} {date_time}  ',end="\r")
+
+sub = mqtt.subscribe_bid_offer("S50H21", main)
+sub.start() 
+
