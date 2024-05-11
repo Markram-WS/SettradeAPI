@@ -4,11 +4,11 @@ import json
 from datetime import datetime
 
 app_id_test = "DUN9VgTfoUZEXocR"
-app_secret_test = "ALSv8m13iHZKxEdJtbh+p9lAmMbX34Waf6U/6lJxstvG"
+app_secret_test = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 account_test = "ausiris5"
 app_code_test = "ALGO"
 broker_id_test = "063"
-pin_test = "111111"
+pin_test = "xxxxxxxxxxxx"
 
 
 investor = settrade.openapi.Investor(
